@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>百度智能搜索框</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        a {
+            color: #545454;
+            text-decoration: none;
+        }
+        
+        .wrapper {
+            left: 150px;
+            top: 300px;
+            position: relative;
+        }
+        
+        input {
+            width: 300px;
+            height: 30px;
+        }
+        
+        ul {
+            width: 300px;
+            position: absolute;
+            display: none;
+            border: 1px solid #000;
+        }
+        
+        li:hover {
+            background: #ccc;
+        }
+        
+        a {
+            margin: 5px;
+            color: #999;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <input type="text">
+        <ul></ul>
+    </div>
+    <script>
+        var oInp = document.getElementsByTagName('input')[0];
+        var oul = document.getElementsByTagName('ul')[0];
+
+        oInp.oninput = function() {
+            var value = this.value;
+            // console.log(value)
+
+            var oScript = document.createElement('script');
+            oScript.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + value + '&cb=doJson';
+            document.body.appendChild(oScript);
+        }
+
+        function doJson(data) {
+            var s = data.s,
+                str = '';
+            if (s.length > 0) {
+                s.forEach(function(ele, index) {
+                    str += '<li><a href=https://www.baidu.com/s?wd=' + ele + '> ' + ele + '</a></li>';
+                })
+                oul.innerHTML = str;
+                oul.style.display = 'block';
+            } else {
+                oul.style.display = 'none';
+            }
+
+        }
+    </script>
+</body>
+
+</html>
